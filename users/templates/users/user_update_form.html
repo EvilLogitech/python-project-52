@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_messages %}
+{% load i18n  %}
+
+{% block content %}
+
+{% if form.errors %}
+
+{% endif %}
+    <h1>{% translate 'Изменение пользователя' %}</h1>
+    <form action="{% url 'users_update' pk=user.id %}" method="post">
+        {{ form.as_p }}
+        {% csrf_token %}
+        <input type="submit" value="{% translate 'Изменить' %}">
+    </form>
+
+{% endblock %}

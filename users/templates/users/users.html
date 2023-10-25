@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_messages %}
+{% load i18n  %}
+
+{% block content %}
+<h1>{% translate 'Пользователи' %}</h1>
+
+    {% for user in users %}
+    <br>{{ user.id }}
+    <br>{{ user.username }}
+    <br>{{ user.first_name }} {{ user.last_name }}
+    <br>{{ user.date_joined }}
+    <br>{{ user.password }}
+
+    {% endfor %}
+
+{% endblock %}

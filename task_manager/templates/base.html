@@ -1,0 +1,28 @@
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_messages %}
+{% load i18n  %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% translate "Менеджер задач" %}</title>
+</head>
+<body>
+    <div>
+        <ul>
+            <li><a href="{% url 'index' %}">{% translate "Менеджер задач" %}</a></li>
+            <li><a href="{% url 'users' %}">{% translate "Пользователи" %}</a></li>
+            <li><a href="{% url 'login' %}">{% translate "Вход" %}</a></li>
+            <li><a href="{% url 'users_create' %}">{% translate "Регистрация" %}</a></li>
+        </ul>
+    </div>
+    {% block content %}
+    {% endblock %}
+    <div>
+        <a href="https://ru.hexlet.io">Hexlet</a>
+    </div>
+</body>
+</html>

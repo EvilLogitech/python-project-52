@@ -1,36 +1,18 @@
+{% extends 'base.html' %}
 {% load django_bootstrap5 %}
 {% bootstrap_css %}
 {% bootstrap_messages %}
 {% load i18n  %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% translate "Менеджер задач" %}</title>
-</head>
-<body>
+{% block content %}
+<div>
     <div>
-        <ul>
-            <li><a href="/">{% translate "Менеджер задач" %}</a></li>
-            <li><a href="users/">{% translate "Пользователи" %}</a></li>
-            <li><a href="login/">{% translate "Вход" %}</a></li>
-            <li><a href="users/create/">{% translate "Регистрация" %}</a></li>
-        </ul>
+        <h1>{% translate "Привет от Хекслета!" %}</h1>
+        <p>{% translate "Практические курсы по программированию" %}</p>
+        <form action="https://ru.hexlet.io" class"form">
+            {% bootstrap_button button_type="submit" content="Узнать больше" %}
+            <!-- <input type="submit" content="Узнать больше"/> -->
+        </form>
     </div>
-    <div>
-        <div>
-            <h1>{% translate "Привет от Хекслета!" %}</h1>
-            <p>{% translate "Практические курсы по программированию" %}</p>
-            <form action="https://ru.hexlet.io" class"form">
-                {% bootstrap_button button_type="submit" content="Узнать больше" %}
-                <!-- <input type="submit" content="Узнать больше"/> -->
-            </form>
-        </div>
-        <div>
-            <a href="https://ru.hexlet.io">Hexlet</a>
-        </div>
-    </div>
-</body>
-</html>
+</div>
+{% endblock %}
