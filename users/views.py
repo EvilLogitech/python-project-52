@@ -1,10 +1,36 @@
+from django.contrib import messages
 from django.shortcuts import render, redirect
-from django.urls import reverse, reverse_lazy
+from django.urls import reverse
 from django.views import View
-from django.views.generic import CreateView, UpdateView
-from django.http import HttpResponse
-from .forms import UsersCreateForm, UsersUpdateForm
+from .forms import UserForm, LoginUserForm
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout
+
+
+class LoginView(View):
+
+    def get(self, request, *args, **kwargs):
+        form = LoginUserForm()
+        return render(request, 'users/login.html', {'form': form})
+
+    def post(self, request, *args, **kwargs):
+        form = LoginUserForm(request.POST)
+        if form.is_valid():
+            form_data = form.cleaned_data
+            user = authenticate(username=form_data['username'], password=form_data['password'])
+            if user:
+                login(request, user)
+                return redirect(reverse('index'))
+        else:
+            form = LoginUserForm()
+        return render(request, 'users/login.html', {'form': form})
+
+
+class LogoutView(View):
+
+    def post(self, request, *args, **kwargs):
+        logout(request)
+        return redirect(reverse('index'))
 
 
 # Create your views here.
@@ -14,55 +40,63 @@ class UsersListView(View):
         return render(request, 'users/users.html', {'users': users})
 
 
-class UsersCreateView(CreateView):
-    form_class = UsersCreateForm
-    template_name = 'users/user_create_form.html'
-    success_url = reverse_lazy('index')
+class UsersCreateView(View):
 
-    # def get(self, request, *args, **kwargs):
-    #     form = UsersCreateForm()
-    #     return render(request, 'users/user-add.html', {'form': form})
-
-    # def post(self, request, *args, **kwargs):
-    #     form = UsersCreateForm(request.POST)
-    #     if form.is_valid():
-    #         user = form.save(commit=False)
-    #         user.set_password(form.cleaned_data['password1'])
-    #         user.save()
-    #         return redirect(reverse('index'))
-    #     return render(request, 'users/user-add.html', {'form': form})
-
-
-class UsersUpdateView(UpdateView):
-    form_class = UsersUpdateForm
-    model = User
-    template_name = 'users/user_update_form.html'
-    success_url = reverse_lazy('index')
+    def get(self, request, *args, **kwargs):
+        form = UserForm()
+        return render(request, 'users/user_create_form.html', {'form': form})
 
     def post(self, request, *args, **kwargs):
-        user = form.save()
-        return render(request, 'users/user-edit.html', {'form': form, 'user': user})
+        form = UserForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.set_password(form.cleaned_data['password1'])
+            user.save()
+            return redirect(reverse('login'))
+        return render(request, 'users/user_create_form.html', {'form': form})
 
-    # fields = ['first_name', 'last_name', 'username', 'password', 'password2']
 
-    # def get(self, request, *args, **kwargs):
-    #     id = kwargs['id']
-    #     user = User.objects.get(pk=id)
-    #     form = UsersUpdateForm(instance=user)
-    #     return render(request, 'users/user-edit.html', {'form': form, 'user': user})
+class UsersUpdateView(View):
 
-    # def post(self, request, *args, **kwargs):
-    #     id = kwargs['id']
-    #     user = User.objects.get(pk=id)
-    #     form = UsersCreateForm(request.POST, instance=user)
-    #     return render(request, 'users/user-edit.html', {'form': form, 'user': user})
+    def get(self, request, *args, **kwargs):
+        id = kwargs['pk']
+        if request.user.id != id:
+            return redirect(reverse('users'), request)
+        user = User.objects.get(pk=id)
+        form = UserForm(instance=user)
+        return render(request, 'users/user_update_form.html', {'form': form, 'user': user})
+
+    def post(self, request, *args, **kwargs):
+        id = kwargs['pk']
+        if request.user.id != id:
+            return redirect(reverse('users'))
+        user = User.objects.get(pk=id)
+        form = UserForm(request.POST, instance=user)
+        if form.is_valid():
+            form_data = form.cleaned_data
+            user = form.save(commit=False)
+            user.set_password(form_data['password1'])
+            user.save()
+            user = authenticate(username=form_data['username'], password=form_data['password1'])
+            login(request, user)
+            return redirect(reverse('users'))
+        return render(request, 'users/user_update_form.html', {'form': form, 'user': user})
 
 
 class UsersDeleteView(View):
+
     def get(self, request, *args, **kwargs):
-        id = kwargs['id']
-        return HttpResponse(f'/users/{id}/delete/ - GET')
+        id = kwargs['pk']
+        if request.user.id != id:
+            messages.add_message(request, messages.INFO, 'Нельзя удалять не своего пользователя.')
+            return redirect(reverse('users'))
+        user = User.objects.get(pk=id)
+        return render(request, 'users/user_delete_form.html', {'user': user})
 
     def post(self, request, *args, **kwargs):
-        id = kwargs['id']
-        return HttpResponse(f'/users/{id}/delete/ - POST')
+        id = kwargs['pk']
+        if request.user.id != id:
+            return redirect(reverse('users'))
+        user = User.objects.get(pk=id)
+        user.delete()
+        return redirect(reverse('users'))

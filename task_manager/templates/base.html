@@ -15,10 +15,26 @@
         <ul>
             <li><a href="{% url 'index' %}">{% translate "Менеджер задач" %}</a></li>
             <li><a href="{% url 'users' %}">{% translate "Пользователи" %}</a></li>
+            {% if request.user.is_authenticated %}
+            <li><a href="{% url 'statuses' %}">{% translate "Статусы" %}</a></li>
+            <li><a href="{% url 'statuses' %}">{% translate "Метки" %}</a></li>
+            <li><a href="{% url 'tasks' %}">{% translate "Задачи" %}</a></li>
+            <li>
+                <form action="{% url 'logout' %}" method="post">{% csrf_token %}
+                    <input type="submit" value = "{% translate 'Выход' %}"/>
+                </form>
+            </li>
+            {% else %}
             <li><a href="{% url 'login' %}">{% translate "Вход" %}</a></li>
             <li><a href="{% url 'users_create' %}">{% translate "Регистрация" %}</a></li>
+            {% endif %}
         </ul>
     </div>
+    {% if messages %}
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+    {% endif %}
     {% block content %}
     {% endblock %}
     <div>

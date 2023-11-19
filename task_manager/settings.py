@@ -39,7 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_bootstrap5',
     'task_manager',
-    'users'
+    'users',
+    'statuses',
+    'tasks'
 ]
 
 MIDDLEWARE = [
@@ -94,7 +96,7 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
         'OPTIONS': {
-            'min_length' : 3
+            'min_length': 3
         }
     },
     # {

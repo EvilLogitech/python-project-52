@@ -9,11 +9,11 @@
 {% if form.errors %}
 
 {% endif %}
-    <h1>{% translate 'Изменение пользователя' %}</h1>
-    <form action="{% url 'users_update' pk=user.id %}" method="post">
+    <h1>{% translate 'Вход' %}</h1>
+    <form action="{% url 'login' %}" method="post">
         {{ form }}
         {% csrf_token %}
-        <input type="submit" value="{% translate 'Изменить' %}">
+        <input type="submit" value="{% translate 'Войти' %}">
     </form>
 
 {% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_messages %}
+{% load i18n  %}
+
+{% block content %}
+<h1>{% translate 'Статусы' %}</h1>
+<form action="{% url 'statuses_create' %}" method="post">
+  {% csrf_token %}
+  <input type="submit" value="{% translate 'Создать статус' %}">
+</form>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>{% translate 'Имя' %}</th>
+            <th>{% translate 'Дата создания' %}</th>
+            <th></th>
+        </tr>
+    {% for status in statuses %}
+        <tr>
+            <td>{{ status.id }}</td>
+            <td>{{ status.name }}</td>
+            <td>{{ status.created_at }}</td>
+            <td><a href="{% url 'statuses_update' pk=status.id %}">Изменить</a> <a href="{% url 'statuses_delete' pk=status.id %}">Удалить</a></td>
+        </tr>
+    {% endfor %}
+    </table>
+{% endblock %}

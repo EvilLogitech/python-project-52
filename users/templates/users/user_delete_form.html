@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_messages %}
+{% load i18n  %}
+
+{% block content %}
+
+{% if form.errors %}
+
+{% endif %}
+    <h1>{% translate 'Удаление пользователя' %}</h1>
+    <p>Вы уверены, что хотите удалить {{ user.first_name }} {{ user.last_name }}</p>
+    <form action="{% url 'users_delete' pk=user.id %}" method="post">
+        {{ form }}
+        {% csrf_token %}
+        <input type="submit" value="{% translate 'Удалить' %}">
+    </form>
+
+{% endblock %}
