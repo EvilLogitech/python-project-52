@@ -1,6 +1,5 @@
 {% load django_bootstrap5 %}
 {% bootstrap_css %}
-{% bootstrap_messages %}
 {% load i18n  %}
 
 <!DOCTYPE html>
@@ -11,34 +10,32 @@
     <title>{% translate "Менеджер задач" %}</title>
 </head>
 <body>
-    <div>
-        <ul>
-            <li><a href="{% url 'index' %}">{% translate "Менеджер задач" %}</a></li>
-            <li><a href="{% url 'users' %}">{% translate "Пользователи" %}</a></li>
+    <header class="container">
+        <ul class="nav nav-pills">
+            <li class="nav-item"><a class="nav-link" href="{% url 'index' %}">{% translate "Менеджер задач" %}</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'users' %}">{% translate "Пользователи" %}</a></li>
             {% if request.user.is_authenticated %}
-            <li><a href="{% url 'statuses' %}">{% translate "Статусы" %}</a></li>
-            <li><a href="{% url 'statuses' %}">{% translate "Метки" %}</a></li>
-            <li><a href="{% url 'tasks' %}">{% translate "Задачи" %}</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'statuses' %}">{% translate "Статусы" %}</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'statuses' %}">{% translate "Метки" %}</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'tasks' %}">{% translate "Задачи" %}</a></li>
             <li>
                 <form action="{% url 'logout' %}" method="post">{% csrf_token %}
-                    <input type="submit" value = "{% translate 'Выход' %}"/>
+                    <input type="submit" class="btn nav-link" value = "{% translate 'Выход' %}"/>
                 </form>
             </li>
             {% else %}
-            <li><a href="{% url 'login' %}">{% translate "Вход" %}</a></li>
-            <li><a href="{% url 'users_create' %}">{% translate "Регистрация" %}</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">{% translate "Вход" %}</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'users_create' %}">{% translate "Регистрация" %}</a></li>
             {% endif %}
         </ul>
-    </div>
-    {% if messages %}
-        {% for message in messages %}
-            {{ message }}
-        {% endfor %}
-    {% endif %}
-    {% block content %}
-    {% endblock %}
-    <div>
+    </header>
+    <main class="container">
+        {% autoescape off %}{% bootstrap_messages %}{% endautoescape %}
+        {% block content %}
+        {% endblock %}
+    </main>
+    <footer class="container">
         <a href="https://ru.hexlet.io">Hexlet</a>
-    </div>
+    </footer>
 </body>
 </html>

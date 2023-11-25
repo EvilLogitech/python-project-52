@@ -5,6 +5,7 @@ from django.views import View
 from .forms import UserForm, LoginUserForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
+from django.utils.translation import gettext as _
 
 
 class LoginView(View):
@@ -36,7 +37,7 @@ class LogoutView(View):
 # Create your views here.
 class UsersListView(View):
     def get(self, request, *args, **kwargs):
-        users = User.objects.exclude(pk=1)
+        users = User.objects.all()
         return render(request, 'users/users.html', {'users': users})
 
 
@@ -61,6 +62,7 @@ class UsersUpdateView(View):
     def get(self, request, *args, **kwargs):
         id = kwargs['pk']
         if request.user.id != id:
+            messages.error(request, _('У вас нет прав для изменения другого пользователя.'))
             return redirect(reverse('users'), request)
         user = User.objects.get(pk=id)
         form = UserForm(instance=user)
@@ -88,7 +90,7 @@ class UsersDeleteView(View):
     def get(self, request, *args, **kwargs):
         id = kwargs['pk']
         if request.user.id != id:
-            messages.add_message(request, messages.INFO, 'Нельзя удалять не своего пользователя.')
+            messages.info(request, _('Нельзя удалять не своего пользователя.'))
             return redirect(reverse('users'))
         user = User.objects.get(pk=id)
         return render(request, 'users/user_delete_form.html', {'user': user})

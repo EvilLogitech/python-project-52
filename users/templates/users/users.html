@@ -6,22 +6,26 @@
 
 {% block content %}
 <h1>{% translate 'Пользователи' %}</h1>
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>{% translate 'Имя пользователя' %}</th>
-            <th>{% translate 'Полное имя' %}</th>
-            <th>{% translate 'Дата создания' %}</th>
-            <th></th>
-        </tr>
+    <table class="table table-stripped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>{% translate 'Имя пользователя' %}</th>
+                <th>{% translate 'Полное имя' %}</th>
+                <th>{% translate 'Дата создания' %}</th>
+                <th></th>
+            </tr>
+        </thead>
     {% for user in users %}
-        <tr>
-            <td>{{ user.id }}</td>
-            <td>{{ user.username }}</td>
-            <td>{{ user.first_name }} {{ user.last_name }}</td>
-            <td>{{ user.date_joined }}</td>
-            <td><a href="{% url 'users_update' pk=user.id %}">Изменить</a> <a href="{% url 'users_delete' pk=user.id %}">Удалить</a></td>
-        </tr>
+        <tbody>
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.first_name }} {{ user.last_name }}</td>
+                <td>{{ user.date_joined }}</td>
+                <td><a href="{% url 'users_update' pk=user.id %}">Изменить</a> <a href="{% url 'users_delete' pk=user.id %}">Удалить</a></td>
+            </tr>
+        </tbody>
     {% endfor %}
     </table>
 {% endblock %}

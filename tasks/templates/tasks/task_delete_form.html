@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_messages %}
+{% load i18n  %}
+
+{% block content %}
+    <h1>{{ title }}</h1>
+    <p>{% translate 'Вы уверены, что хотите удалить ' %}{{task.name}}?</p>
+    <form action="{% url 'tasks_delete' task.pk %}" method="post" class="from">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        {% bootstrap_button button_value button_type="submit" button_class="btn-primary" %}
+    </form>
+{% endblock %}

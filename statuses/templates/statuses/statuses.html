@@ -5,25 +5,29 @@
 {% load i18n  %}
 
 {% block content %}
-<h1>{% translate 'Статусы' %}</h1>
+<h1>{{ title }}</h1>
 <form action="{% url 'statuses_create' %}" method="post">
   {% csrf_token %}
-  <input type="submit" value="{% translate 'Создать статус' %}">
+  {% bootstrap_button button_value button_type="submit" button_class="btn-primary" %}
 </form>
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>{% translate 'Имя' %}</th>
-            <th>{% translate 'Дата создания' %}</th>
-            <th></th>
-        </tr>
-    {% for status in statuses %}
-        <tr>
-            <td>{{ status.id }}</td>
-            <td>{{ status.name }}</td>
-            <td>{{ status.created_at }}</td>
-            <td><a href="{% url 'statuses_update' pk=status.id %}">Изменить</a> <a href="{% url 'statuses_delete' pk=status.id %}">Удалить</a></td>
-        </tr>
+    <table class="table table-stripped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>{% translate 'Имя' %}</th>
+                <th>{% translate 'Дата создания' %}</th>
+                <th></th>
+            </tr>
+        </thead>
+    {% for status in object_list %}
+        <tbody>
+            <tr>
+                <td>{{ status.id }}</td>
+                <td>{{ status.name }}</td>
+                <td>{{ status.created_at }}</td>
+                <td><a href="{% url 'statuses_update' pk=status.id %}">Изменить</a> <a href="{% url 'statuses_delete' pk=status.id %}">Удалить</a></td>
+            </tr>
+        </tbody>
     {% endfor %}
     </table>
 {% endblock %}

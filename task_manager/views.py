@@ -1,13 +1,6 @@
 from django.shortcuts import render
+# from gettext import translate as _
 
 
 def index(request):
     return render(request, 'index.html', context={})
-
-
-def login(request):
-    return render(request, 'base.html', context={})
-
-
-def logout(request):
-    return render(request, 'base.html', context={})

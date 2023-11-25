@@ -5,9 +5,10 @@
 {% load i18n  %}
 
 {% block content %}
-     <form action="{% url 'statuses_update' status.pk %}" method="post">
-         {% csrf_token %}
-         {{ form }}
-         <input type="submit" value="Изменить"/>
-     </form>
+<h1>{{ title }}</h1>
+    <form action="{% url 'statuses_update' status.pk %}" method="post">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        {% bootstrap_button button_value button_type="submit" button_class="btn-primary" %}
+    </form>
 {% endblock %}

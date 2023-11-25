@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_messages %}
+{% load i18n  %}
+
+{% block content %}
+<h1>{{ title }}</h1>
+<form action="{% url 'tasks_create' %}" method="post">
+  {% csrf_token %}
+  {% bootstrap_button button_value button_type="submit" button_class="btn-primary" %}
+</form>
+    <table class="table table-stripped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>{% translate 'Имя' %}</th>
+                <th>{% translate 'Статус' %}</th>
+                <th>{% translate 'Автор' %}</th>
+                <th>{% translate 'Исполнитель' %}</th>
+                <th>{% translate 'Дата создания' %}</th>    
+                <th></th>
+            </tr>
+        </thead>
+    {% for task in object_list %}
+        <tbody>
+            <tr>
+                <td>{{ task.id }}</td>
+                <td>{{ task.name }}</td>
+                <td>{{ task.status }}</td>
+                <td>{{ task.author }}</td>
+                <td>{{ task.executor }}</td>
+                <td>{{ task.created_at }}</td>
+                <td><a href="{% url 'tasks_update' task.pk %}">Изменить</a> <a href="{% url 'tasks_delete' task.pk %}">Удалить</a></td>
+            </tr>
+        </tbody>
+    {% endfor %}
+    </table>
+{% endblock %}

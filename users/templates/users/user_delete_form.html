@@ -10,7 +10,7 @@
 
 {% endif %}
     <h1>{% translate 'Удаление пользователя' %}</h1>
-    <p>Вы уверены, что хотите удалить {{ user.first_name }} {{ user.last_name }}</p>
+    <p>{% translate 'Вы уверены, что хотите удалить ' %}{{ user.first_name }} {{ user.last_name }}?</p>
     <form action="{% url 'users_delete' pk=user.id %}" method="post">
         {{ form }}
         {% csrf_token %}
