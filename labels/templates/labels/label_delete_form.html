@@ -6,7 +6,8 @@
 
 {% block content %}
     <h1>{{ title }}</h1>
-    <form action="{% url 'labels_create' %}" method="post">
+    <p>{% translate 'Вы уверены, что хотите удалить ' %}{{label.name}}?</p>
+    <form action="{% url 'labels_delete' label.pk %}" method="post" class="from">
         {% csrf_token %}
         {% bootstrap_form form %}
         {% bootstrap_button button_value button_type="submit" button_class="btn-primary" %}

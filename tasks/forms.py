@@ -3,10 +3,13 @@ from tasks.models import Task
 
 
 class TaskForm(forms.ModelForm):
-    model = Task
-    fields = [
+
+    class Meta:
+        model = Task
+        fields = [
         'name',
         'description',
         'executor',
-        'status'
+        'status',
+        'labels'
     ]

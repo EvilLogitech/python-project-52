@@ -6,7 +6,7 @@
 
 {% block content %}
 <h1>{{ title }}</h1>
-<form action="{% url 'statuses_create' %}" method="post">
+<form action="{% url 'labels_create' %}" method="post">
   {% csrf_token %}
   {% bootstrap_button button_value button_type="submit" button_class="btn-primary" %}
 </form>
@@ -15,17 +15,17 @@
             <tr>
                 <th>ID</th>
                 <th>{% translate 'Имя' %}</th>
-                <th>{% translate 'Дата создания' %}</th>
+                <th>{% translate 'Дата создания' %}</th>    
                 <th></th>
             </tr>
         </thead>
-    {% for status in object_list %}
+    {% for label in object_list %}
         <tbody>
             <tr>
-                <td>{{ status.id }}</td>
-                <td>{{ status.name }}</td>
-                <td>{{ status.created_at|date:'d.m.Y H:i' }}</td>
-                <td><a href="{% url 'statuses_update' pk=status.id %}">Изменить</a> <a href="{% url 'statuses_delete' pk=status.id %}">Удалить</a></td>
+                <td>{{ label.id }}</td>
+                <td>{{ label.name }}</td>
+                <td>{{ label.created_at|date:'d.m.Y H:i' }}</td>
+                <td><a href="{% url 'labels_update' label.pk %}">Изменить</a> <a href="{% url 'labels_delete' label.pk %}">Удалить</a></td>
             </tr>
         </tbody>
     {% endfor %}

@@ -1,6 +1,6 @@
-from django.http import HttpResponse
 from django.contrib import messages
 from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.base import ContextMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -14,6 +14,7 @@ from django.utils.translation import gettext as _
 
 class TasksListView(LoginRequiredMixin, ListView, ContextMixin):
     model = Task
+    form_class = TaskForm
     template_name = 'tasks/tasks.html'
     extra_context = {'title': _('Задачи'), 'button_value': ('Создать задачу')}
 
@@ -21,7 +22,7 @@ class TasksListView(LoginRequiredMixin, ListView, ContextMixin):
 class TasksCreateView(LoginRequiredMixin, CreateView, ContextMixin):
     model = Task
     form = TaskForm
-    fields = ['name', 'description', 'executor', 'status']
+    form_class = TaskForm
     template_name = 'tasks/task_create_form.html'
     success_url = reverse_lazy('tasks')
     extra_context = {'title': _('Создать задачу'), 'button_value': _('Создать')}
@@ -34,8 +35,7 @@ class TasksCreateView(LoginRequiredMixin, CreateView, ContextMixin):
 
 class TasksUpdateView(LoginRequiredMixin, UpdateView, ContextMixin):
     model = Task
-    form = TaskForm
-    fields = ['name', 'description', 'executor', 'status']
+    form_class = TaskForm
     template_name = 'tasks/task_update_form.html'
     success_url = reverse_lazy('tasks')
     extra_context = {'title': _('Изменение задачи'), 'button_value': _('Изменить')}
@@ -54,5 +54,11 @@ class TasksDeleteView(LoginRequiredMixin, DeleteView, ContextMixin):
         if current_user.pk == task.author.pk:
             return super().dispatch(request, *args, **kwargs)
         else:
-            messages.error(request, _('Задачу может удалить только ее автор'))
+            messages.error(request, _('Задачу может удалить только её автор'))
             return redirect(reverse('tasks'))
+
+
+class TaskDetailedView(DetailView, ContextMixin):
+    model = Task
+    template_name = 'tasks/task.html'
+    extra_context = {'title': _('Просмотр задачи')}
