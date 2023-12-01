@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_messages %}
+{% load i18n  %}
+
+{% block content %}
+    <div>
+        <p>{% translate "Что-то пошло не так. Запрашиваемая страница не существует" %}</p>
+    </div>
+{% endblock %}

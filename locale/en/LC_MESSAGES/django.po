@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-02 00:30+0300\n"
+"POT-Creation-Date: 2023-12-02 01:41+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -115,6 +115,10 @@ msgstr "Status updated successfully"
 msgid "Статус успешно удален"
 msgstr "Status deleted successfully"
 
+#: task_manager/templates/404.html:9
+msgid "Что-то пошло не так. Запрашиваемая страница не существует"
+msgstr "Something gone wrong. Requested page doesn't exists"
+
 #: task_manager/templates/base.html:10 task_manager/templates/base.html:17
 msgid "Менеджер задач"
 msgstr "Task manager"
@@ -140,11 +144,11 @@ msgstr "Enter"
 msgid "Регистрация"
 msgstr "Register"
 
-#: task_manager/templates/index.html:10
+#: task_manager/templates/index.html:9
 msgid "Привет от Хекслета!"
 msgstr "Hello from Hexlet"
 
-#: task_manager/templates/index.html:11
+#: task_manager/templates/index.html:10
 msgid "Практические курсы по программированию"
 msgstr "Programming courses in practice"
 
@@ -175,7 +179,7 @@ msgstr "Status"
 msgid "Удалить"
 msgstr "Delete"
 
-#: tasks/tests.py:92 tasks/views.py:79
+#: tasks/tests.py:97 tasks/views.py:79
 #, fuzzy
 #| msgid "Задачу может удалить только её автор"
 msgid "Задачу может удалить только ее автор"
