@@ -17,7 +17,6 @@ class TestTasks(TestCase):
         self.client = Client()
         self.client.force_login(TaskManagerUser.objects.first())
 
-
     def test_list_task(self):
         response = self.client.get(reverse('tasks'))
         self.assertContains(response, 'Test task 1')
@@ -33,7 +32,7 @@ class TestTasks(TestCase):
         self.assertContains(response, 'Name Surname')
         self.assertNotContains(response, 'Used label 2')
         self.assertNotContains(response, 'Status 2')
-    
+
     def test_create_task(self):
         response = self.client.post(
             reverse('tasks_create'),
