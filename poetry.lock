@@ -154,7 +154,7 @@ Django = ">=3.2"
 name = "flake8"
 version = "6.1.0"
 description = "the modular source code checker: pep8 pyflakes and co"
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.8.1"
 files = [
@@ -171,7 +171,7 @@ pyflakes = ">=3.1.0,<3.2.0"
 name = "mccabe"
 version = "0.7.0"
 description = "McCabe checker, plugin for flake8"
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.6"
 files = [
@@ -183,7 +183,7 @@ files = [
 name = "pycodestyle"
 version = "2.11.1"
 description = "Python style guide checker"
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.8"
 files = [
@@ -195,7 +195,7 @@ files = [
 name = "pyflakes"
 version = "3.1.0"
 description = "passive checker of Python programs"
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.8"
 files = [
@@ -277,4 +277,4 @@ brotli = ["Brotli"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "6bbf609afdace0bdf24277f5baa98d8ac71965951b306ea031b3e31d41594260"
+content-hash = "1b584d6e4829f4f5822796be81bf59df3df8f3a073bd2e671302d856e8f92db8"

@@ -4,3 +4,4 @@ __pychache__
 coverage.xml
 test.py
 .idea
+sqlite.db

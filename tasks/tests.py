@@ -17,12 +17,14 @@ class TestTasks(TestCase):
         self.client = Client()
         self.client.force_login(TaskManagerUser.objects.first())
 
-    def test_task_crud(self):
+
+    def test_list_task(self):
         response = self.client.get(reverse('tasks'))
         self.assertContains(response, 'Test task 1')
         self.assertContains(response, 'Test task 2')
         self.assertNotContains(response, 'Test task 3')
 
+    def test_task_detail(self):
         response = self.client.get(reverse('task_detail', kwargs={'pk': 1}))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'Used label 1')
@@ -31,7 +33,8 @@ class TestTasks(TestCase):
         self.assertContains(response, 'Name Surname')
         self.assertNotContains(response, 'Used label 2')
         self.assertNotContains(response, 'Status 2')
-
+    
+    def test_create_task(self):
         response = self.client.post(
             reverse('tasks_create'),
             data={
@@ -44,6 +47,8 @@ class TestTasks(TestCase):
             }
         )
         self.assertEqual(response.status_code, 302)
+        response = self.client.get(reverse('tasks'))
+        self.assertContains(response, 'Test task 3')
         response = self.client.get(reverse('task_detail', kwargs={'pk': 3}))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'Test task 3')
@@ -55,29 +60,31 @@ class TestTasks(TestCase):
         self.assertContains(response, 'Name Surname')
         self.assertNotContains(response, 'Status 2')
 
+    def test_update_task(self):
         response = self.client.post(
-            reverse('tasks_update', kwargs={'pk': 3}),
+            reverse('tasks_update', kwargs={'pk': 1}),
             data={
                 'name': 'Test task 3',
                 'description': 'Test new cases',
-                'status': 1,
-                'author': 2,
+                'status': 2,
+                'author': 1,
                 'executor': 2,
-                'labels': [1]
+                'labels': [1, 2]
             }
         )
         self.assertEqual(response.status_code, 302)
-        response = self.client.get(reverse('task_detail', kwargs={'pk': 3}))
+        response = self.client.get(reverse('task_detail', kwargs={'pk': 1}))
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, 'Test task 3')
-        self.assertNotContains(response, 'Test some cases')
+        self.assertNotContains(response, 'Test task 1')
         self.assertContains(response, 'Test new cases')
         self.assertContains(response, 'Used label 1')
-        self.assertNotContains(response, 'Used label 2')
-        self.assertContains(response, 'Status 1')
+        self.assertContains(response, 'Used label 2')
         self.assertContains(response, 'First Last')
         self.assertContains(response, 'Name Surname')
-        self.assertNotContains(response, 'Status 2')
+        self.assertNotContains(response, 'Status 1')
+        self.assertContains(response, 'Status 2')
+
+    def test_delete_task(self):
 
         response = self.client.post(
             reverse('tasks_delete', kwargs={'pk': 2}),
@@ -86,17 +93,15 @@ class TestTasks(TestCase):
         response = self.client.get(reverse('tasks'))
         self.assertContains(response, 'Test task 1')
         self.assertContains(response, 'Test task 2')
-        self.assertContains(response, 'Test task 3')
         self.assertContains(
             response,
             _('Задачу может удалить только ее автор')
         )
 
         response = self.client.post(
-            reverse('tasks_delete', kwargs={'pk': 3}),
+            reverse('tasks_delete', kwargs={'pk': 1}),
         )
         self.assertEqual(response.status_code, 302)
         response = self.client.get(reverse('tasks'))
-        self.assertContains(response, 'Test task 1')
+        self.assertNotContains(response, 'Test task 1')
         self.assertContains(response, 'Test task 2')
-        self.assertNotContains(response, 'Test task 3')

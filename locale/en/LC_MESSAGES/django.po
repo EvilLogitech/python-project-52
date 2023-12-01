@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-01 01:18+0300\n"
+"POT-Creation-Date: 2023-12-02 00:30+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -37,6 +37,10 @@ msgstr "Are you sure, you want to delete "
 #: users/templates/users/users.html:15
 msgid "Дата создания"
 msgstr "Creation date"
+
+#: labels/tests.py:59 labels/views.py:64
+msgid "Невозможно удалить метку, потому что она используется"
+msgstr "This label cannot be deleted. It's in use"
 
 #: labels/views.py:17 task_manager/templates/base.html:21 tasks/models.py:46
 #: tasks/templates/tasks/task.html:37
@@ -86,9 +90,9 @@ msgstr "Delete label"
 msgid "Да, удалить"
 msgstr "Yes, delete"
 
-#: labels/views.py:64
-msgid "Невозможно удалить метку, потому что она используется"
-msgstr "This label cannot be deleted. It's in use"
+#: statuses/tests.py:59 statuses/views.py:58
+msgid "Невозможно удалить статус, потому что он используется"
+msgstr "This status cannot be deleted. It's in use"
 
 #: statuses/views.py:19 statuses/views.py:31 statuses/views.py:41
 #: statuses/views.py:50 task_manager/templates/base.html:20
@@ -110,10 +114,6 @@ msgstr "Status updated successfully"
 #: statuses/views.py:49
 msgid "Статус успешно удален"
 msgstr "Status deleted successfully"
-
-#: statuses/views.py:58
-msgid "Невозможно удалить статус, потому что он используется"
-msgstr "This status cannot be deleted. It's in use"
 
 #: task_manager/templates/base.html:10 task_manager/templates/base.html:17
 msgid "Менеджер задач"
@@ -175,6 +175,12 @@ msgstr "Status"
 msgid "Удалить"
 msgstr "Delete"
 
+#: tasks/tests.py:92 tasks/views.py:79
+#, fuzzy
+#| msgid "Задачу может удалить только её автор"
+msgid "Задачу может удалить только ее автор"
+msgstr "Only author can delete task"
+
 #: tasks/views.py:25
 msgid "Показать"
 msgstr "Show"
@@ -202,10 +208,6 @@ msgstr "Task deleted successfully"
 #: tasks/views.py:68
 msgid "Удаление задачи"
 msgstr "Delete task"
-
-#: tasks/views.py:79
-msgid "Задачу может удалить только её автор"
-msgstr "Only author can delete task"
 
 #: tasks/views.py:86
 msgid "Просмотр задачи"
