@@ -9,25 +9,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% translate "Менеджер задач" %}</title>
 </head>
-<body>
-    <header class="container">
-        <ul class="nav nav-pills">
-            <li class="nav-item"><a class="nav-link" href="{% url 'index' %}">{% translate "Менеджер задач" %}</a></li>
-            <li class="nav-item"><a class="nav-link" href="{% url 'users' %}">{% translate "Пользователи" %}</a></li>
-            {% if request.user.is_authenticated %}
-            <li class="nav-item"><a class="nav-link" href="{% url 'statuses' %}">{% translate "Статусы" %}</a></li>
-            <li class="nav-item"><a class="nav-link" href="{% url 'labels' %}">{% translate "Метки" %}</a></li>
-            <li class="nav-item"><a class="nav-link" href="{% url 'tasks' %}">{% translate "Задачи" %}</a></li>
-            <li>
-                <form action="{% url 'logout' %}" method="post">{% csrf_token %}
-                    <input type="submit" class="btn nav-link" value = "{% translate 'Выход' %}"/>
-                </form>
-            </li>
-            {% else %}
-            <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">{% translate "Вход" %}</a></li>
-            <li class="nav-item"><a class="nav-link" href="{% url 'users_create' %}">{% translate "Регистрация" %}</a></li>
-            {% endif %}
-        </ul>
+<body class="d-flex flex-column min-vh-100">
+    <header class="container bg-light">
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <div class="collapse navbar-collapse" id="navbarToggleExternalContent">    
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item"><a class="nav-link" href="{% url 'index' %}">{% translate "Менеджер задач" %}</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'users' %}">{% translate "Пользователи" %}</a></li>
+                    {% if request.user.is_authenticated %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'statuses' %}">{% translate "Статусы" %}</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'labels' %}">{% translate "Метки" %}</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'tasks' %}">{% translate "Задачи" %}</a></li>
+                    <li>
+                        <form action="{% url 'logout' %}" method="post">{% csrf_token %}
+                            <input type="submit" class="btn nav-link" value = "{% translate 'Выход' %}"/>
+                        </form>
+                    </li>
+                    {% else %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">{% translate "Вход" %}</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'users_create' %}">{% translate "Регистрация" %}</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
     </header>
     <main class="container">
         {% autoescape off %}{% bootstrap_messages %}{% endautoescape %}

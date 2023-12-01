@@ -1,0 +1,22 @@
+[
+    {
+        "model": "users.taskmanageruser",
+        "pk": 1,
+        "fields": {
+            "first_name": "First",
+            "last_name": "Last",
+            "username": "TestUser1",
+            "password": "SecretPass"
+        }
+    },
+    {
+        "model": "users.taskmanageruser",
+        "pk": 2,
+        "fields": {
+            "first_name": "Name",
+            "last_name": "Surname",
+            "username": "TestUser2",
+            "password": "Password1"
+        }
+    }
+]

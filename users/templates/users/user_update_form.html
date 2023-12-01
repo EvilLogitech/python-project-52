@@ -5,15 +5,10 @@
 {% load i18n  %}
 
 {% block content %}
-
-{% if form.errors %}
-
-{% endif %}
-    <h1>{% translate 'Изменение пользователя' %}</h1>
+    <h1>{{ title }}</h1>
     <form action="{% url 'users_update' pk=user.id %}" method="post">
-        {{ form }}
         {% csrf_token %}
-        <input type="submit" value="{% translate 'Изменить' %}">
+        {% bootstrap_form form %}
+        {% bootstrap_button button_value button_class="btn-primary" %}
     </form>
-
 {% endblock %}

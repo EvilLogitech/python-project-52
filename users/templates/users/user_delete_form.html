@@ -5,16 +5,10 @@
 {% load i18n  %}
 
 {% block content %}
-
-{% if form.errors %}
-
-{% endif %}
-    <h1>{% translate 'Удаление пользователя' %}</h1>
+    <h1>{{ title }}</h1>
     <p>{% translate 'Вы уверены, что хотите удалить ' %}{{ user.first_name }} {{ user.last_name }}?</p>
     <form action="{% url 'users_delete' pk=user.id %}" method="post">
-        {{ form }}
         {% csrf_token %}
-        <input type="submit" value="{% translate 'Удалить' %}">
+        {% bootstrap_button button_value button_class="btn-primary btn-danger" %}
     </form>
-
 {% endblock %}

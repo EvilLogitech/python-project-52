@@ -10,6 +10,6 @@
     <form action="{% url 'tasks_delete' task.pk %}" method="post" class="from">
         {% csrf_token %}
         {% bootstrap_form form %}
-        {% bootstrap_button button_value button_type="submit" button_class="btn-primary" %}
+        {% bootstrap_button button_value button_type="submit" button_class="btn-primary btn-danger" %}
     </form>
 {% endblock %}

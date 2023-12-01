@@ -1,22 +1,16 @@
 install:
 		poetry install
 
-build:
-		./build.sh
-
 lint:
-		poetry run flake8 page_analyzer
-		poetry run flake8 tests
+		poetry run flake8 --exclude=migrations,admin.py,settings.py\
+		task_manager tasks users labels statuses locale
 
 test:
-		poetry run pytest --cov
-
-remove:
-		python3 -m pip uninstall hexlet-code
+		poetry run python3 manage.py test
 
 test-coverage:
-		poetry run pytest --cov=page_analyzer tests/ --cov-report xml
+		poetry run coverage run --source='.' manage.py test
+		poetry run coverage xml
 
-PORT ?= 8000
 start:
-		python3 manage.py runserver
+		poetry run python3 manage.py runserver

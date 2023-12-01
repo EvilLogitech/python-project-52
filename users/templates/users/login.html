@@ -5,15 +5,11 @@
 {% load i18n  %}
 
 {% block content %}
-
-{% if form.errors %}
-
-{% endif %}
     <h1>{% translate 'Вход' %}</h1>
     <form action="{% url 'login' %}" method="post">
-        {{ form }}
+        {% bootstrap_form form %}
         {% csrf_token %}
-        <input type="submit" value="{% translate 'Войти' %}">
+        {% bootstrap_button button_value button_type="submit" button_class="btn-primary" %}
     </form>
 
 {% endblock %}

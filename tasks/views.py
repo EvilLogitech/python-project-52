@@ -1,31 +1,43 @@
+from django_filters.views import FilterView
 from django.contrib import messages
-from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.base import ContextMixin
+from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse, reverse_lazy
 from django.shortcuts import redirect
 from users.models import TaskManagerUser
 from .models import Task
+from .filters import TaskFilter
 from .forms import TaskForm
 from django.utils.translation import gettext as _
 
 
-class TasksListView(LoginRequiredMixin, ListView, ContextMixin):
+class TasksListView(LoginRequiredMixin, FilterView, ContextMixin):
     model = Task
+    filterset_class = TaskFilter
     form_class = TaskForm
     template_name = 'tasks/tasks.html'
-    extra_context = {'title': _('Задачи'), 'button_value': ('Создать задачу')}
+    extra_context = {
+        'title': _('Задачи'),
+        'button_value': ('Создать задачу'),
+        'button_filter_value': _('Показать')
+    }
 
 
-class TasksCreateView(LoginRequiredMixin, CreateView, ContextMixin):
+class TasksCreateView(LoginRequiredMixin, SuccessMessageMixin,
+                      CreateView, ContextMixin):
     model = Task
     form = TaskForm
     form_class = TaskForm
     template_name = 'tasks/task_create_form.html'
     success_url = reverse_lazy('tasks')
-    extra_context = {'title': _('Создать задачу'), 'button_value': _('Создать')}
+    success_message = _('Задача успешно создана')
+    extra_context = {
+        'title': _('Создать задачу'),
+        'button_value': _('Создать')
+    }
 
     def form_valid(self, form):
         user = self.request.user
@@ -33,19 +45,29 @@ class TasksCreateView(LoginRequiredMixin, CreateView, ContextMixin):
         return super().form_valid(form)
 
 
-class TasksUpdateView(LoginRequiredMixin, UpdateView, ContextMixin):
+class TasksUpdateView(LoginRequiredMixin, SuccessMessageMixin,
+                      UpdateView, ContextMixin):
     model = Task
     form_class = TaskForm
     template_name = 'tasks/task_update_form.html'
     success_url = reverse_lazy('tasks')
-    extra_context = {'title': _('Изменение задачи'), 'button_value': _('Изменить')}
+    success_message = _('Задача успешно изменена')
+    extra_context = {
+        'title': _('Изменение задачи'),
+        'button_value': _('Изменить')
+    }
 
 
-class TasksDeleteView(LoginRequiredMixin, DeleteView, ContextMixin):
+class TasksDeleteView(LoginRequiredMixin, SuccessMessageMixin,
+                      DeleteView, ContextMixin):
     model = Task
     template_name = 'tasks/task_delete_form.html'
     success_url = reverse_lazy('tasks')
-    extra_context = {'title': _('Удаление задачи'), 'button_value': _('Удалить')}
+    success_message = _('Задача успешно удалена')
+    extra_context = {
+        'title': _('Удаление задачи'),
+        'button_value': _('Да, удалить')
+    }
 
     def dispatch(self, request, *args, **kwargs):
         current_user = self.request.user
@@ -54,7 +76,7 @@ class TasksDeleteView(LoginRequiredMixin, DeleteView, ContextMixin):
         if current_user.pk == task.author.pk:
             return super().dispatch(request, *args, **kwargs)
         else:
-            messages.error(request, _('Задачу может удалить только её автор'))
+            messages.error(request, _('Задачу может удалить только ее автор'))
             return redirect(reverse('tasks'))
 
 
