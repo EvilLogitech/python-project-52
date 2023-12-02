@@ -53,4 +53,4 @@ class Task(models.Model):
 
 class LabelsRelations(models.Model):
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
-    label = models.ForeignKey(Label, on_delete=models.PROTECT)
+    labels = models.ForeignKey(Label, on_delete=models.PROTECT)
