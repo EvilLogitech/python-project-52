@@ -43,7 +43,7 @@ class Task(models.Model):
         Label,
         through='LabelsRelations',
         blank=True,
-        verbose_name=_('Метки')
+        verbose_name=_('Метка')
     )
     created_at = models.DateTimeField(auto_now_add=True)
 
