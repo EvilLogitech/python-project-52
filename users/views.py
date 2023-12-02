@@ -154,7 +154,7 @@ class UsersDeleteView(View):
         user = User.objects.get(pk=id)
         user.delete()
         messages.info(
-                request,
-                _('Пользователь успешно удален')
-            )
+            request,
+            _('Пользователь успешно удален')
+        )
         return redirect(reverse('users'))
