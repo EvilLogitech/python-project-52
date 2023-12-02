@@ -7,7 +7,10 @@ from django.utils.translation import gettext as _
 
 class TaskFilter(django_filters.FilterSet):
 
-    labels = django_filters.ModelChoiceFilter(queryset=Label.objects.all())
+    labels = django_filters.ModelChoiceFilter(
+        queryset=Label.objects.all(),
+        label=_("Метка")
+    )
     own_tasks = django_filters.BooleanFilter(
         label=_('Только свои задачи'),
         method='get_authenticated_user_tasks', widget=CheckboxInput
