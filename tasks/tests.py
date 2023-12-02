@@ -42,7 +42,7 @@ class TestTasks(TestCase):
                 'status': 1,
                 'author': 2,
                 'executor': 2,
-                'label': [1, 2]
+                'labels': [1, 2]
             }
         )
         self.assertEqual(response.status_code, 302)
@@ -68,7 +68,7 @@ class TestTasks(TestCase):
                 'status': 2,
                 'author': 1,
                 'executor': 2,
-                'label': [1, 2]
+                'labels': [1, 2]
             }
         )
         self.assertEqual(response.status_code, 302)
