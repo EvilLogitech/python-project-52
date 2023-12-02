@@ -39,7 +39,7 @@ class Task(models.Model):
         blank=False,
         verbose_name=_('Статус')
     )
-    labels = models.ManyToManyField(
+    label = models.ManyToManyField(
         Label,
         through='LabelsRelations',
         blank=True,
@@ -53,4 +53,4 @@ class Task(models.Model):
 
 class LabelsRelations(models.Model):
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
-    lables = models.ForeignKey(Label, on_delete=models.PROTECT)
+    label = models.ForeignKey(Label, on_delete=models.PROTECT)

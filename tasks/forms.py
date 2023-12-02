@@ -11,5 +11,5 @@ class TaskForm(forms.ModelForm):
             'description',
             'executor',
             'status',
-            'labels'
+            'label'
         ]
