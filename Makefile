@@ -9,7 +9,7 @@ build: install migrate
 
 lint:
 		poetry run flake8 --exclude=migrations,admin.py,settings.py\
-		task_manager tasks users labels statuses locale
+		task_manager
 
 test:
 		poetry run python3 manage.py test
